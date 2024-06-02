@@ -3,12 +3,10 @@ import SideBar from "../../shared/components/SideBar";
 
 function LeftSide() {
   return (
-    <div className="w-3/12 h-full">
-      <div className="flex">
-        <div className="w-3/4">
-          <Opener />
-          <SideBar />
-        </div>
+    <div className="w-2/12 h-full">
+      <div>
+        <Opener />
+        <SideBar />
       </div>
     </div>
   );

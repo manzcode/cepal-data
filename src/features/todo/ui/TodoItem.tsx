@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { extractMonthAndDay } from "../lib/getMonthAndDay";
 import { Todo } from "../model/todo";
+import Delete from "../actions/Delete";
 
 interface TodoProps extends Todo {
   onClick?: () => void;
@@ -28,14 +29,15 @@ function TodoItem(props: TodoProps) {
             >
               {showDetail ? "x" : "Details"}
             </div>
-            {!showDetail && (
+            {!showDetail && <>
               <div
-                className="my-auto underline text-neutral-900 cursor-pointer"
+                className="my-auto mr-4 underline text-neutral-900 cursor-pointer"
                 onClick={props.onClick}
               >
                 Edit
               </div>
-            )}
+              <Delete id={props.id} />
+            </>}
           </div>
         </div>
         {showDetail && (

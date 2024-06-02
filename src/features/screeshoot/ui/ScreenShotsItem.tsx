@@ -1,4 +1,14 @@
-function ScreenShotsItem({ image, id }: { image: string; id: number }) {
+import Delete from "../actions/Delete";
+
+function ScreenShotsItem({
+  image,
+  id,
+  onClick,
+}: {
+  image: string;
+  id: number;
+  onClick?: () => void;
+}) {
   return (
     <div className="flex gap-5 my-3 justify-between px-5 mt-7 w-full max-md:flex-wrap max-md:max-w-full">
       <div className="flex gap-3 text-black">
@@ -9,8 +19,24 @@ function ScreenShotsItem({ image, id }: { image: string; id: number }) {
         />
         <div className="flex-auto my-auto">Screenshots-{id}.png</div>
       </div>
-      <a href={image} target="_blank" className="my-auto text-indigo-800 underline"> View</a>
-
+      <div className="flex">
+        <a
+          href={image}
+          target="_blank"
+          className="my-auto mr-2 text-indigo-800 underline "
+        >
+          {" "}
+          View
+        </a>
+        <div
+          onClick={onClick}
+          className="my-auto mr-2 text-indigo-800 underline cursor-pointer"
+        >
+          {" "}
+          edit
+        </div>
+        <Delete id={id} />
+      </div>
     </div>
   );
 }

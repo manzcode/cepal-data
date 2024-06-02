@@ -15,7 +15,7 @@ function Dashboard() {
   const context = useContext(DashboardContext);
   const { state } = context as ContextProps;
   return (
-    <div className="flex h-full">
+    <main className="flex h-full">
       <LeftSide />
       <Activities />
       <RightSide />
@@ -24,7 +24,7 @@ function Dashboard() {
           <SwitchForm />
         </Modal>
       )}
-    </div>
+    </main>
   );
 }
 

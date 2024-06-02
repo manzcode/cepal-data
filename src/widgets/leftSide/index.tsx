@@ -1,3 +1,4 @@
+import Opener from "../../shared/components/opener";
 import SideBar from "../../shared/components/SideBar";
 
 function LeftSide() {
@@ -5,6 +6,7 @@ function LeftSide() {
     <div className="w-3/12 h-full">
       <div className="flex">
         <div className="w-3/4">
+          <Opener />
           <SideBar />
         </div>
       </div>

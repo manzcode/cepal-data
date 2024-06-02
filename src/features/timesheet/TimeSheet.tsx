@@ -7,8 +7,11 @@ import TimeSheetItem from "./ui/TimeSheetItem";
 import { usePaginationHooks } from "./lib/hooks";
 import ErrorMessage from "../../shared/components/ErrorMessage";
 import Pagination from "../../widgets/Pagination";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { DashboardContext, ContextProps } from "../../entities/dashboard/context";
+import Modal from "../../shared/components/modal";
+import Update from "./actions/update";
+import Close from "./ui/close";
 
 function TimeSheet() {
   const context = useContext(DashboardContext);
@@ -23,9 +26,8 @@ function TimeSheet() {
     },
   });
   const idcolor = [color.indigo, color.yellow, color.green] as const;
-console.log('====================================');
-console.log(state.timeSheet);
-console.log('====================================');
+  const [update, setUpdate] = useState<number | undefined>()
+  
   return (
     <>
       <div className="flex gap-5 m-4 max-md:flex-wrap max-md:max-w-full">
@@ -71,6 +73,9 @@ console.log('====================================');
               <th className="px-6 py-3 text-left text-base text-black">
                 Duration
               </th>
+              <th className="px-6 py-3 text-left text-base text-black">
+                Action
+              </th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
@@ -91,6 +96,7 @@ console.log('====================================');
                 duration={value.duration}
                 start-end-time={value["start-end-time"]}
                 project-name={value["project-name"]}
+                onClick={() => setUpdate(value.id)}
               />
             ))}
           </tbody>
@@ -102,6 +108,11 @@ console.log('====================================');
           isNext={data?.length as number}
         />
       </div>
+      {
+        update && <Modal title={<Close onClick={() => {setUpdate(undefined)}} />} >
+        <Update id={update} />
+      </Modal>
+      }
     </>
   );
 }

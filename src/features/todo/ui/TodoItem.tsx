@@ -2,7 +2,11 @@ import { useState } from "react";
 import { extractMonthAndDay } from "../lib/getMonthAndDay";
 import { Todo } from "../model/todo";
 
-function TodoItem(props: Todo) {
+interface TodoProps extends Todo {
+  onClick?: () => void;
+}
+
+function TodoItem(props: TodoProps) {
   const date = extractMonthAndDay(props["date-to-do"]);
   const [showDetail, setShowDetail] = useState(false);
   return (
@@ -17,11 +21,21 @@ function TodoItem(props: Todo) {
             <div className="text-black">{props["project-name"]}</div>
             <div className="mt-1 text-stone-300">{props.status}</div>
           </div>
-          <div
-            className="my-auto underline text-neutral-900 cursor-pointer"
-            onClick={() => setShowDetail((p) => !p)}
-          >
-            {showDetail ? "x" : "Details"}
+          <div className="flex">
+            <div
+              className="my-auto mr-2 underline text-neutral-900 cursor-pointer"
+              onClick={() => setShowDetail((p) => !p)}
+            >
+              {showDetail ? "x" : "Details"}
+            </div>
+            {!showDetail && (
+              <div
+                className="my-auto underline text-neutral-900 cursor-pointer"
+                onClick={props.onClick}
+              >
+                Edit
+              </div>
+            )}
           </div>
         </div>
         {showDetail && (

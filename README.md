@@ -11,6 +11,8 @@ Currently, two official plugins are available:
 
 ``
 pnpm run install
+``
+``
 pnpm run dev
 ``
 

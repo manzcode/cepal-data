@@ -8,26 +8,29 @@ import { usePaginationHooks } from "./lib/hooks";
 import ErrorMessage from "../../shared/components/ErrorMessage";
 import Pagination from "../../widgets/Pagination";
 import { useContext, useState } from "react";
-import { DashboardContext, ContextProps } from "../../entities/dashboard/context";
+import {
+  DashboardContext,
+  ContextProps,
+} from "../../entities/dashboard/context";
 import Modal from "../../shared/components/modal";
 import Update from "./actions/update";
 import Close from "./ui/close";
 
 function TimeSheet() {
   const context = useContext(DashboardContext);
-  const { state,addTimeSheets } = context as ContextProps;
+  const { state, addTimeSheets } = context as ContextProps;
   const { currentPage, next, prev } = usePaginationHooks();
   const { isPending, isError, data, error } = useQuery({
     queryKey: [key.TimesheetPerPage, currentPage],
     queryFn: async () => {
       const res = await getTimeSheetPerPage(currentPage);
-      addTimeSheets(res.data)
+      addTimeSheets(res.data);
       return res.data;
     },
   });
   const idcolor = [color.indigo, color.yellow, color.green] as const;
-  const [update, setUpdate] = useState<number | undefined>()
-  
+  const [update, setUpdate] = useState<number | undefined>();
+
   return (
     <>
       <div className="flex gap-5 m-4 max-md:flex-wrap max-md:max-w-full">
@@ -55,52 +58,54 @@ function TimeSheet() {
             view full sheet
           </div>
         </div>
-        <table className="m-3 divide-y divide-gray-200">
-          <thead>
-            <tr>
-              <th className="px-6 py-3 text-left text-base text-black border-r-2 border-zinc-100">
-                Project name
-              </th>
-              <th className="px-6 py-3 text-left text-base text-black border-r-2 border-zinc-100">
-                Date
-              </th>
-              <th className="px-6 py-3 text-left text-base text-black border-r-2 border-zinc-100">
-                Start time
-              </th>
-              <th className="px-6 py-3 text-left text-base text-black border-r-2 border-zinc-100">
-                End time
-              </th>
-              <th className="px-6 py-3 text-left text-base text-black">
-                Duration
-              </th>
-              <th className="px-6 py-3 text-left text-base text-black">
-                Action
-              </th>
-            </tr>
-          </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
-            <tr>
-              <td colSpan={5}>{isPending && <Spiner />}</td>
-            </tr>
-            {isError && (
+        <div className="max-md:mt-10 max-md:max-w-full overflow-x-auto">
+          <table className="m-3 divide-y divide-gray-200">
+            <thead>
               <tr>
-                <ErrorMessage message={error.message} />
+                <th className="px-6 py-3 text-left text-base text-black border-r-2 border-zinc-100">
+                  Project name
+                </th>
+                <th className="px-6 py-3 text-left text-base text-black border-r-2 border-zinc-100">
+                  Date
+                </th>
+                <th className="px-6 py-3 text-left text-base text-black border-r-2 border-zinc-100">
+                  Start time
+                </th>
+                <th className="px-6 py-3 text-left text-base text-black border-r-2 border-zinc-100">
+                  End time
+                </th>
+                <th className="px-6 py-3 text-left text-base text-black">
+                  Duration
+                </th>
+                <th className="px-6 py-3 text-left text-base text-black">
+                  Action
+                </th>
               </tr>
-            )}
-            {state.timeSheet?.map((value, index) => (
-              <TimeSheetItem
-                key={index}
-                date={value.date}
-                IdColor={idcolor[index % idcolor.length]}
-                id={value.id}
-                duration={value.duration}
-                start-end-time={value["start-end-time"]}
-                project-name={value["project-name"]}
-                onClick={() => setUpdate(value.id)}
-              />
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200">
+              <tr>
+                <td colSpan={5}>{isPending && <Spiner />}</td>
+              </tr>
+              {isError && (
+                <tr>
+                  <ErrorMessage message={error.message} />
+                </tr>
+              )}
+              {state.timeSheet?.map((value, index) => (
+                <TimeSheetItem
+                  key={index}
+                  date={value.date}
+                  IdColor={idcolor[index % idcolor.length]}
+                  id={value.id}
+                  duration={value.duration}
+                  start-end-time={value["start-end-time"]}
+                  project-name={value["project-name"]}
+                  onClick={() => setUpdate(value.id)}
+                />
+              ))}
+            </tbody>
+          </table>
+        </div>
         <Pagination
           current={currentPage}
           next={next}
@@ -108,11 +113,19 @@ function TimeSheet() {
           isNext={data?.length as number}
         />
       </div>
-      {
-        update && <Modal title={<Close onClick={() => {setUpdate(undefined)}} />} >
-        <Update id={update} />
-      </Modal>
-      }
+      {update && (
+        <Modal
+          title={
+            <Close
+              onClick={() => {
+                setUpdate(undefined);
+              }}
+            />
+          }
+        >
+          <Update id={update} />
+        </Modal>
+      )}
     </>
   );
 }

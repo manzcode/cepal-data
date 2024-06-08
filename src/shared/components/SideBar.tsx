@@ -1,8 +1,8 @@
 import logo from "../assets/React Native.svg";
 function SideBar() {
   return (
-    <div className="flex flex-col grow items-center py-14 pr-20 pl-7 mx-auto w-full text-base bg-indigo-800 text-neutral-400 max-md:px-5">
-      <div className="flex gap-3.5 text-white">
+    <div className="flex flex-col grow items-center w-full text-md px-3 bg-indigo-800 text-neutral-400 max-md:px-5">
+      <div className="flex gap-3.5 py-3 text-white">
         <img
           loading="lazy"
           src={logo}

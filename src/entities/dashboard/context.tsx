@@ -10,10 +10,12 @@ interface State {
   todo: Todo[];
   timeSheet: TimeSheet[];
   screeShoot: SreenShoot[];
+  showSideBar: boolean;
 }
 
 type Action =
   | { type: "TOGGLE_SHOW" }
+  | { type: "TOGGLE_SIDEBAR" }
   | { type: "SET_WITCH"; payload: number }
   | { type: "ADD_TODO"; payload: Todo }
   | { type: "ADD_TIMESHEET"; payload: TimeSheet }
@@ -31,6 +33,7 @@ type Action =
 export interface ContextProps {
   state: State;
   toggleShow: () => void;
+  toggleSideBar: () => void;
   setWitch: (number: number) => void;
   addTodo: (todo: Todo) => void;
   addTimeSheet: (timeSheet: TimeSheet) => void;
@@ -49,6 +52,7 @@ export interface ContextProps {
 // Définir les valeurs initiales de l'état
 const initialState: State = {
   show: false,
+  showSideBar: true,
   witch: 0,
   timeSheet: [],
   todo: [],
@@ -63,6 +67,8 @@ const reducer = (state: State, action: Action): State => {
   switch (action.type) {
     case "TOGGLE_SHOW":
       return { ...state, show: !state.show };
+    case "TOGGLE_SIDEBAR":
+      return { ...state, showSideBar: !state.showSideBar };
     case "SET_WITCH":
       return { ...state, witch: action.payload };
     case "ADD_TODO":
@@ -127,6 +133,7 @@ const DashBoardProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const toggleShow = () => dispatch({ type: "TOGGLE_SHOW" });
+  const toggleSideBar = () => dispatch({ type: "TOGGLE_SIDEBAR" });
   const setWitch = (number: number) =>
     dispatch({ type: "SET_WITCH", payload: number });
   const addTodo = (todo: Todo) => dispatch({ type: "ADD_TODO", payload: todo });
@@ -134,7 +141,8 @@ const DashBoardProvider = ({ children }: { children: ReactNode }) => {
     dispatch({ type: "ADD_TIMESHEET", payload: timeSheet });
   const addScreenShoot = (screeShoot: SreenShoot) =>
     dispatch({ type: "ADD_SCREENSHOOT", payload: screeShoot });
-    const deleteTodo = (todo: Todo) => dispatch({ type: "DELETE_TODO", payload: todo });
+  const deleteTodo = (todo: Todo) =>
+    dispatch({ type: "DELETE_TODO", payload: todo });
   const deleteTimeSheet = (timeSheet: TimeSheet) =>
     dispatch({ type: "DELETE_TIMESHEET", payload: timeSheet });
   const deleteScreenShoot = (screeShoot: SreenShoot) =>
@@ -157,6 +165,7 @@ const DashBoardProvider = ({ children }: { children: ReactNode }) => {
       value={{
         state,
         toggleShow,
+        toggleSideBar,
         setWitch,
         addTodo,
         addTimeSheet,
@@ -169,7 +178,7 @@ const DashBoardProvider = ({ children }: { children: ReactNode }) => {
         updateScreenShoot,
         deleteTodo,
         deleteTimeSheet,
-        deleteScreenShoot
+        deleteScreenShoot,
       }}
     >
       {children}

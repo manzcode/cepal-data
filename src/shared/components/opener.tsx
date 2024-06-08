@@ -1,12 +1,10 @@
 
-function Opener({onClick}: {onClick?: () => void}) {
+function Opener({onClick, toggle}: {onClick?: () => void, toggle:boolean}) {
   return <div className="relative" onClick={onClick}>
-  <div className="absolute top-[25vh] left-[14vw] border-4 border-white flex justify-center items-center px-6 bg-indigo-800 rounded-full h-[60px] w-[60px]">
-    <img
-      loading="lazy"
-      src="https://cdn.builder.io/api/v1/image/assets/TEMP/0123c66b5e7cfe45f9478c94050c77993252e102ff422b4f0b9119aa665c0aa9?"
-      className="w-2.5 aspect-[0.67] fill-white"
-    />
+  <div className={`absolute top-[25vh] ${toggle ? "left-[14vw]" : ""} border-4 border-white flex justify-center items-center px-6 bg-indigo-800 rounded-full h-[60px] w-[60px]`}>
+    <span className="w-2.5 aspect-[0.67] text-white">
+      {toggle ? "<" : ">"}
+    </span>
   </div>
 </div>
 }

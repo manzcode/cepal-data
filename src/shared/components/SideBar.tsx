@@ -1,7 +1,7 @@
 import logo from "../assets/React Native.svg";
 function SideBar() {
   return (
-    <div className="flex flex-col grow items-center w-full text-md px-3 bg-indigo-800 text-neutral-400 max-md:px-5">
+    <div className="flex flex-col grow items-center h-full w-full text-md px-3 bg-indigo-800 text-neutral-400 max-md:px-5">
       <div className="flex gap-3.5 py-3 text-white">
         <img
           loading="lazy"
@@ -66,8 +66,8 @@ function SideBar() {
         />
         <div>Help</div>
       </div>
-      <div className="flex gap-5 self-start mt-72 w-full text-white max-md:mt-10">
-        <div className="flex flex-1 gap-4">
+      <div className="flex gap-5 self-start items-end h-full w-full text-white max-md:mt-10">
+        <div className="flex flex-1 gap-4 my-4">
           <img
             loading="lazy"
             srcSet="..."
@@ -75,7 +75,7 @@ function SideBar() {
           />
           <div className="my-auto">Log out</div>
         </div>
-        <div className="flex flex-1 gap-1.5 my-auto whitespace-nowrap">
+        <div className="flex flex-1 gap-1.5 my-4 whitespace-nowrap">
           <img
             loading="lazy"
             src="https://cdn.builder.io/api/v1/image/assets/TEMP/de114a237f0d5589640dd9b19486aebff204d13d5e28a1f074bd55abf2042762?"
